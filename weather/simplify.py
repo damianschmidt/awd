@@ -2,17 +2,32 @@ from os import path
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from weather.utils import step
 
 DATASET_URL = 'https://www.kaggle.com/saraivaufc/conventional-weather-stations-brazil/download'
 DATASET_NAME = 'conventional_weather_stations_inmet_brazil_1961_2019.csv'
 
 
 def simplify_data():
+    progress = 0
+    number_of_steps = 5
+
+    progress = step(progress, number_of_steps)
     data = get_data()
+
+    progress = step(progress, number_of_steps)
     format_date(data)
-    top_five_stations = data['Station'].value_counts().head(5)
+
+    progress = step(progress, number_of_steps)
+    top_five_stations = data['Code'].value_counts().head(5)
+
+    progress = step(progress, number_of_steps)
     save_simplified_data(data, top_five_stations)
+
+    progress = step(progress, number_of_steps)
     plot_stations_with_most_record(top_five_stations)
+
+    step(progress, number_of_steps)
 
 
 def get_data():
@@ -33,7 +48,7 @@ def get_data():
     ])
 
     data.rename(columns={
-        'Estacao': 'Station',
+        'Estacao': 'Code',
         'Data': 'Date',
         'Hora': 'Hour',
         'Precipitacao': 'Precipitation',
@@ -67,7 +82,7 @@ def save_simplified_data(data, top_five_station):
     print('Save all data...')
     data.to_csv('data/simplified.csv', sep=';', index=False)
     print('Save top one data...')
-    data[data['Station'] == top_five_station.index[0]].to_csv('data/top_one.csv', sep=';',
+    data[data['Code'] == top_five_station.index[0]].to_csv('data/top_one.csv', sep=';',
                                                               index=False)
 
 
