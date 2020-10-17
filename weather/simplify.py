@@ -2,7 +2,6 @@ from os import path
 
 import matplotlib.pyplot as plt
 import pandas as pd
-
 from utils import step
 
 DATASET_URL = 'https://www.kaggle.com/saraivaufc/conventional-weather-stations-brazil/download'
@@ -84,7 +83,7 @@ def save_simplified_data(data, top_five_station):
     data.to_csv('data/simplified.csv', sep=';', index=False)
     print('Save top one data...')
     data[data['Code'] == top_five_station.index[0]].to_csv('data/top_one.csv', sep=';',
-                                                              index=False)
+                                                           index=False)
 
 
 def plot_stations_with_most_record(data):
