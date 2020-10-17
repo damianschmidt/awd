@@ -2,7 +2,8 @@ from os import path
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from weather.utils import step
+
+from utils import step
 
 DATASET_URL = 'https://www.kaggle.com/saraivaufc/conventional-weather-stations-brazil/download'
 DATASET_NAME = 'conventional_weather_stations_inmet_brazil_1961_2019.csv'
