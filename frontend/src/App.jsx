@@ -40,7 +40,7 @@ const App = () => {
               <Form.Input fluid label="Time(Zulu)" placeholder="Time" />
               <Form.Select
                 fluid
-                label="Aircaft"
+                label="Aircraft"
                 options={options}
                 placeholder="Aircraft"
               />
@@ -68,7 +68,7 @@ const App = () => {
                 </Grid>
               </Segment>
               <Segment>
-                <Header as="h4">Deparrture Info</Header>
+                <Header as="h4">Departure Info</Header>
                 <p>
                   Weather: SBGL 092000Z 29002KT 9999 FEW020 BKN100 25/22 Q1010
                 </p>
