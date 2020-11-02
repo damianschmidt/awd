@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  background-image: url("../img/funky-lines.png");
+}
+
+.body {
+  background-color: #ffffffcc;
+  padding: 2rem;
+  margin-top: 1em;
+  border-radius: 0.3em;
+  box-shadow: 0 -1px 0 0 white, -2px 0 5px -3px #888888,
+    0px 2px 5px -3px #888888, 2px 0 5px -3px #888888;
+}
+
+.menu {
+  margin-bottom: 0 !important;
+}
+
+.form {
+  margin-bottom: 2em;
+}
+
+.vertical::before,
+.vertical::after {
+  display: none;
+}
