@@ -1,6 +1,6 @@
 {
-  "short_name": "SPMiT",
-  "name": "Sterowanie produkcją magazynową i transportem",
+  "short_name": "AWD",
+  "name": "Algorytmy wspomagania decyzji",
   "icons": [
     {
       "src": "favicon.ico",
