@@ -9,7 +9,7 @@ const App = () => {
     <>
       <HeaderBar />
       <Container>
-        <div className="body">
+        <div className="main-body">
           <DataForm />
           <InfoPanel />
         </div>

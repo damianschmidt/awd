@@ -14,3 +14,6 @@ venv.bak/
 
 # Wheater data
 weather/data
+
+# Frontend
+node_modules
