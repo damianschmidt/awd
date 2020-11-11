@@ -1,7 +1,7 @@
 import React from "react";
-import imageMap from "../img/map.png";
 import imageLogo from "../img/logo.png";
 import { Divider, Grid, Header, Image, Segment } from "semantic-ui-react";
+import Map from "./Map";
 
 const InfoPanel = ({ flightPlan }) => {
   return (
@@ -44,7 +44,9 @@ const InfoPanel = ({ flightPlan }) => {
         </Segment>
       </Grid.Column>
       <Grid.Column>
-        <Image fluid src={imageMap} />
+        <Segment>
+          <Map />
+        </Segment>
       </Grid.Column>
     </Grid>
   );

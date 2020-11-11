@@ -39,8 +39,11 @@ const DataForm = ({ setFlightPlan }) => {
       `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     );
 
+    let minutes = date.getUTCMinutes();
+    if (minutes < 10) minutes = "0" + minutes;
+
     if (date.getUTCMinutes())
-      setDefaultTime(`${date.getUTCHours()}:${date.getUTCMinutes()}`);
+      setDefaultTime(`${date.getUTCHours()}:${minutes}`);
   }, [currentDate, defaultTime]);
 
   const handleClick = (e) => {
@@ -68,8 +71,8 @@ const DataForm = ({ setFlightPlan }) => {
     }
 
     setErrorMessages(errors);
-    setLoading(true);
-    if (!errorOccurred) {
+    if (errors.length === 0) {
+      setLoading(true);
       const response = await axios.post(
         "https://cors-anywhere.herokuapp.com/https://api.flightplandatabase.com/auto/generate",
         {
