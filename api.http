@@ -1,0 +1,9 @@
+# Creates a new flight plan using the route generator.
+POST https://api.flightplandatabase.com/auto/generate
+Content-Type: application/json
+Authorization: mxGdrRHaud8vDe8PzYYkH9UTzL8ZDZfzfDXU1CeL
+
+{
+  "fromICAO":"SBGL",
+  "toICAO":"SBBR"
+}

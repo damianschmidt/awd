@@ -1,30 +1,147 @@
-import React from "react";
-import { Divider, Form } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import _ from "lodash";
+import {
+  Accordion,
+  Divider,
+  Form,
+  Icon,
+  Loader,
+  Message,
+} from "semantic-ui-react";
+import Airports from "../utils/airports.json";
+import Aircrafts from "../utils/aircrafts.json";
 
-const options = [
-  { key: "b", text: "Airbus a320", value: "Airbus" },
-  { key: "a", text: "Boeing 737", value: "Boeing" },
-];
+const aircraftsIcao = _.map(Aircrafts, (aircraft, index) => ({
+  key: index,
+  text: aircraft.name,
+  value: aircraft.name,
+}));
 
-const DataForm = () => {
+const airportsIcao = _.map(Airports, (airport, index) => ({
+  key: index,
+  text: airport.icao,
+  value: airport.icao,
+}));
+
+const DataForm = ({ setFlightPlan }) => {
+  const [activeIndex, setActiveIndex] = useState(true);
+  const [currentDate, setCurrentDate] = useState("");
+  const [defaultTime, setDefaultTime] = useState("");
+  const [errorMessages, setErrorMessages] = useState([]);
+  const [errorOccurred, setErrorOccurred] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const date = new Date();
+
+    setCurrentDate(
+      `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    );
+
+    if (date.getUTCMinutes())
+      setDefaultTime(`${date.getUTCHours()}:${date.getUTCMinutes()}`);
+  }, [currentDate, defaultTime]);
+
+  const handleClick = (e) => {
+    setActiveIndex(!activeIndex);
+  };
+
+  const submitHandler = async (e) => {
+    const Departure = e.target.elements[0].nextSibling.innerText;
+    const Arrival = e.target.elements[1].nextSibling.innerText;
+    const Aircraft = e.target.elements[4].nextSibling.innerText;
+    const errors = [];
+    setErrorOccurred(false);
+
+    if (Departure === Arrival) {
+      errors[0] = "Arrival it can't be the same as Departure";
+      setErrorOccurred(true);
+    }
+    if (Departure === "Departure" || Arrival === "Arrival") {
+      errors[1] = "Arrival Departure can't be empty";
+      setErrorOccurred(true);
+    }
+    if (Aircraft === "Aircraft") {
+      errors[2] = "Aircraft can't be empty";
+      setErrorOccurred(true);
+    }
+
+    setErrorMessages(errors);
+    setLoading(true);
+    if (!errorOccurred) {
+      const response = await axios.post(
+        "https://cors-anywhere.herokuapp.com/https://api.flightplandatabase.com/auto/generate",
+        {
+          fromICAO: Departure,
+          toICAO: Arrival,
+        },
+        {
+          headers: {
+            Authorization:
+              "Basic bXhHZHJSSGF1ZDh2RGU4UHpZWWtIOVVUekw4WkRaZnpmRFhVMUNlTDo=",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setFlightPlan(response.data);
+      setActiveIndex(!activeIndex);
+    }
+    setLoading(false);
+  };
+
   return (
     <>
-      <Form>
-        <Form.Group widths="equal">
-          <Form.Input fluid label="Departure" placeholder="Departure" />
-          <Form.Input fluid label="Arrive" placeholder="Arrive" />
-          <Form.Input fluid label="Date" placeholder="Date" />
-          <Form.Input fluid label="Time(Zulu)" placeholder="Time" />
-          <Form.Select
-            fluid
-            label="Aircraft"
-            options={options}
-            placeholder="Aircraft"
-          />
-        </Form.Group>
-
-        <Form.Button>Submit</Form.Button>
-      </Form>
+      <Accordion>
+        <Accordion.Title active={activeIndex} index={0} onClick={handleClick}>
+          <Icon name="dropdown" />
+          Flight Info
+        </Accordion.Title>
+        <Accordion.Content active={activeIndex}>
+          <Form onSubmit={submitHandler} error={errorOccurred}>
+            <Form.Group widths="equal">
+              <Form.Select
+                search
+                fluid
+                options={airportsIcao}
+                label="Departure"
+                placeholder="Departure"
+              />
+              <Form.Select
+                search
+                fluid
+                options={airportsIcao}
+                label="Arrival"
+                placeholder="Arrival"
+              />
+              <Form.Input
+                type="date"
+                fluid
+                label="Date"
+                defaultValue={currentDate}
+              />
+              <Form.Input
+                type="time"
+                fluid
+                label="Time (Zulu)"
+                defaultValue={defaultTime}
+              />
+              <Form.Select
+                search
+                fluid
+                label="Aircraft"
+                options={aircraftsIcao}
+                placeholder="Aircraft"
+              />
+            </Form.Group>
+            <Message error header="Action Forbidden" list={errorMessages} />
+            <div className="form-btn">
+              <Form.Button>Submit</Form.Button>
+              {loading ? <Loader active inline /> : <Loader disabled inline />}
+            </div>
+          </Form>
+        </Accordion.Content>
+      </Accordion>
       <Divider />
     </>
   );

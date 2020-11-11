@@ -24,3 +24,11 @@ body {
 .vertical::after {
   display: none;
 }
+
+.form-btn {
+  display: flex;
+}
+
+.loader {
+  margin-left: 20px !important;
+}

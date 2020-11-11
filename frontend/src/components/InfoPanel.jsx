@@ -1,24 +1,28 @@
 import React from "react";
 import imageMap from "../img/map.png";
+import imageLogo from "../img/logo.png";
 import { Divider, Grid, Header, Image, Segment } from "semantic-ui-react";
 
-const InfoPanel = () => {
+const InfoPanel = ({ flightPlan }) => {
   return (
-    <Grid columns={2}>
+    <Grid columns={2} stackable>
       <Grid.Column>
         <Segment>
-          <Grid columns={2}>
+          <Grid stackable columns={2}>
             <Divider vertical>
-              {/* <Image src={image} size="mini" /> */}
+              <Image src={imageLogo} size="mini" />
             </Divider>
             <Grid.Column textAlign="center">
-              <Header as="h4">Rio Galeao</Header>
-              <p>SBGL</p>
-              <p>Gate 533</p>
+              <Header as="h4">
+                {flightPlan.fromName ? flightPlan.fromName : "..."}
+              </Header>
+              <p>{flightPlan.fromICAO ? flightPlan.fromICAO : "..."}</p>
             </Grid.Column>
             <Grid.Column textAlign="center">
-              <Header as="h4">Presidente Juscelino</Header>
-              <p>SBBR</p>
+              <Header as="h4">
+                {flightPlan.toName ? flightPlan.toName : "..."}
+              </Header>
+              <p>{flightPlan.toICAO ? flightPlan.toICAO : "..."}</p>
             </Grid.Column>
           </Grid>
         </Segment>

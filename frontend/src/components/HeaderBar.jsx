@@ -8,7 +8,7 @@ const HeaderBar = () => {
       <Container>
         <Menu.Item as="a" header>
           <Image size="mini" src={image} style={{ marginRight: "1.5em" }} />
-          Application Logo
+          AWD
         </Menu.Item>
         <Header as="h2"></Header>
       </Container>
