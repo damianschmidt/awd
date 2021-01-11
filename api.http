@@ -1,0 +1,8 @@
+# basic API call
+###
+GET http://localhost:5000/api/1
+
+# airport info call
+###
+GET http://localhost:5000/api/airport/KJFK
+
