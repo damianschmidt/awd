@@ -2,8 +2,8 @@ import requests
 import json
 from flask import Blueprint, jsonify
 
-
 FLIGHT = Blueprint('airport_info', __name__)
+
 
 def airport_info(ICAO):
     """
@@ -30,17 +30,17 @@ def airport_info(ICAO):
     airport_info_list.append(data['lon'])
     airport_info_list.append(data['elevation'])
     airport_info_list.append(data['magneticVariation'])
-      
+
     runways_count = data['runwayCount'] * 2
     if runways_count == 2:
-        
+
         airport_info_list.append(data['runways'][0]['ident'])
         airport_info_list.append(data['runways'][0]['navaids'][0]['lat'])
         airport_info_list.append(data['runways'][0]['navaids'][0]['lon'])
         airport_info_list.append(data['runways'][0]['surface'])
     else:
 
-        for i in range(0,runways_count):
+        for i in range(0, runways_count):
             airport_info_list.append(data['runways'][i]['ident'])
             airport_info_list.append(data['runways'][i]['ends'][0]['lat'])
             airport_info_list.append(data['runways'][i]['ends'][0]['lon'])
