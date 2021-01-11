@@ -24,12 +24,8 @@ def airport_info(ICAO):
     url = f'https://api.flightplandatabase.com/nav/airport/{ICAO}'
     r = requests.get(url=url)
     data = r.json()
-    airport_info_list = []
-    airport_info_list.append(data['name'])
-    airport_info_list.append(data['lat'])
-    airport_info_list.append(data['lon'])
-    airport_info_list.append(data['elevation'])
-    airport_info_list.append(data['magneticVariation'])
+    airport_info_list = [data['name'], data['lat'], data['lon'],
+                         data['elevation'], data['magneticVariation']]
 
     runways_count = data['runwayCount'] * 2
     if runways_count == 2:
