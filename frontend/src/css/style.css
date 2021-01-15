@@ -24,3 +24,17 @@ body {
 .vertical::after {
   display: none;
 }
+
+.form-btn {
+  display: flex;
+}
+
+.loader {
+  margin-left: 20px !important;
+}
+
+.leaflet-map {
+  height: auto;
+  min-height: 500px;
+  z-index: 1;
+}
