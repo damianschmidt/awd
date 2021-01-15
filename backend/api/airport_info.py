@@ -29,21 +29,25 @@ def airport_info(ICAO):
         'latitude': data['lat'],
         'longitude': data['lon'],
         'elevation': data['elevation'],
-        'magnetic Varation': data['magneticVariation']
+        'magnetic Varation': data['magneticVariation'],
+        'runway ident': [],
+        'runway length': [],
+        'runway width': [],
+        'runway surface': []
     }
     runways_count = data['runwayCount'] * 2
 
     if runways_count == 2:
-        airport_info_dict['runway ident'] = data['runways'][0]['ident']
-        airport_info_dict['runway lat'] = data['runways'][0]['ends'][0]['lat']
-        airport_info_dict['runway lon'] = data['runways'][0]['ends'][0]['lon']
-        airport_info_dict['runway surface'] = data['runways'][0]['surface']
+        airport_info_dict['runway ident'].append(data['runways'][0]['ident'])
+        airport_info_dict['runway length'].append(data['runways'][0]['length'])
+        airport_info_dict['runway width'].append(data['runways'][0]['width'])
+        airport_info_dict['runway surface'].append(data['runways'][0]['surface'])
     else:
         for i in range(0, runways_count):
-            airport_info_dict[f'runway ident{i}'] = data['runways'][i]['ident']
-            airport_info_dict[f'runway lat{i}'] = data['runways'][i]['ends'][0]['lat']
-            airport_info_dict[f'runway lon{i}'] = data['runways'][i]['ends'][0]['lon']
-            airport_info_dict[f'runway surface{i}'] = data['runways'][i]['surface']
+            airport_info_dict['runway ident'].append(data['runways'][i]['ident'])
+            airport_info_dict['runway length'].append(data['runways'][i]['length'])
+            airport_info_dict['runway width'].append(data['runways'][i]['width'])
+            airport_info_dict['runway surface'].append(data['runways'][i]['surface'])
             
     return airport_info_dict 
 
