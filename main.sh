@@ -1,16 +1,16 @@
-ECHO ON
+#!/bin/bash
 
-REM clear interface
+# clear interface
 docker-compose -f docker/docker-compose.yml down --volumes
 
-REM backend
+# backend
 docker-compose -f docker/docker-compose.yml build "backend"
 docker-compose -f docker/docker-compose.yml up -d "backend"
 
-REM frontend
+# frontend
 docker-compose -f docker/docker-compose.yml build "frontend"
 docker-compose -f docker/docker-compose.yml up -d "frontend"
 
-REM follow
+# follow
 docker-compose -f docker/docker-compose.yml logs --follow --tail 50 "backend" &
 docker-compose -f docker/docker-compose.yml logs --follow --tail 50 "frontend" &
