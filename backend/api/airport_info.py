@@ -17,8 +17,8 @@ def airport_info(ICAO):
         airport magnetic variation
         airport runways
             identifier
-            latitude
-            longitude
+            length
+            width
             surface
     """
     url = f'https://api.flightplandatabase.com/nav/airport/{ICAO}'
@@ -41,15 +41,20 @@ def airport_info(ICAO):
         airport_info_dict['runway ident'].append(data['runways'][0]['ident'])
         airport_info_dict['runway length'].append(data['runways'][0]['length'])
         airport_info_dict['runway width'].append(data['runways'][0]['width'])
-        airport_info_dict['runway surface'].append(data['runways'][0]['surface'])
+        airport_info_dict['runway surface'].append(
+            data['runways'][0]['surface'])
     else:
         for i in range(0, runways_count):
-            airport_info_dict['runway ident'].append(data['runways'][i]['ident'])
-            airport_info_dict['runway length'].append(data['runways'][i]['length'])
-            airport_info_dict['runway width'].append(data['runways'][i]['width'])
-            airport_info_dict['runway surface'].append(data['runways'][i]['surface'])
-            
-    return airport_info_dict 
+            airport_info_dict['runway ident'].append(
+                data['runways'][i]['ident'])
+            airport_info_dict['runway length'].append(
+                data['runways'][i]['length'])
+            airport_info_dict['runway width'].append(
+                data['runways'][i]['width'])
+            airport_info_dict['runway surface'].append(
+                data['runways'][i]['surface'])
+
+    return airport_info_dict
 
 
 @FLIGHT.route('/<string:ICAO>', methods=['GET'])
