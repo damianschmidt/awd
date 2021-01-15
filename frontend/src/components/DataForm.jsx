@@ -73,21 +73,21 @@ const DataForm = ({ setFlightPlan }) => {
     setErrorMessages(errors);
     if (errors.length === 0) {
       setLoading(true);
-      const response = await axios.post(
-        "https://cors-anywhere.herokuapp.com/https://api.flightplandatabase.com/auto/generate",
-        {
-          fromICAO: Departure,
-          toICAO: Arrival,
-        },
-        {
-          headers: {
-            Authorization:
-              "Basic bXhHZHJSSGF1ZDh2RGU4UHpZWWtIOVVUekw4WkRaZnpmRFhVMUNlTDo=",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setFlightPlan(response.data);
+      let response = [];
+
+      response[0] = (
+        await axios.get(`http://localhost:5000/api/airport/${Departure}`)
+      ).data;
+      response[0].icao = Departure;
+
+      response[1] = (
+        await axios.get(`http://localhost:5000/api/airport/${Arrival}`)
+      ).data;
+      response[1].icao = Arrival;
+
+      console.log("odp: ", response);
+
+      setFlightPlan(response);
       setActiveIndex(!activeIndex);
     }
     setLoading(false);

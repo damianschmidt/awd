@@ -14,30 +14,78 @@ const InfoPanel = ({ flightPlan }) => {
             </Divider>
             <Grid.Column textAlign="center">
               <Header as="h4">
-                {flightPlan.fromName ? flightPlan.fromName : "..."}
+                {flightPlan[0].name ? flightPlan[0].name : "..."}
               </Header>
-              <p>{flightPlan.fromICAO ? flightPlan.fromICAO : "..."}</p>
+              <p>{flightPlan[0].icao ? flightPlan[0].icao : "..."}</p>
             </Grid.Column>
             <Grid.Column textAlign="center">
               <Header as="h4">
-                {flightPlan.toName ? flightPlan.toName : "..."}
+                {flightPlan[1].name ? flightPlan[1].name : "..."}
               </Header>
-              <p>{flightPlan.toICAO ? flightPlan.toICAO : "..."}</p>
+              <p>{flightPlan[1].icao ? flightPlan[1].icao : "..."}</p>
             </Grid.Column>
           </Grid>
         </Segment>
         <Segment>
           <Header as="h4">Departure Info</Header>
-          <p>Weather: SBGL 092000Z 29002KT 9999 FEW020 BKN100 25/22 Q1010</p>
-          <p>Runway: 10 CON 13.123 x 148 ft ( 4.000 x 45 m )</p>
+          <p>
+            Name:&nbsp;&nbsp;{flightPlan[0].name ? flightPlan[0].name : "..."}
+            &nbsp; ({flightPlan[0].icao ? flightPlan[0].icao : "..."})
+          </p>
+          <p>
+            Elevation:&nbsp;&nbsp;
+            {parseInt(
+              flightPlan[0].elevation ? flightPlan[0].elevation : "..."
+            )}
+            &nbsp;ft
+          </p>
+          <p>Runways:</p>
+          <ul>
+            <li>
+              <p>
+                Runway:&nbsp;&nbsp;{" "}
+                {flightPlan[0]["runway ident"]
+                  ? flightPlan[0]["runway ident"]
+                  : "..."}{" "}
+                {flightPlan[0]["runway surface"]
+                  ? flightPlan[0]["runway surface"]
+                  : "..."}{" "}
+                13.123 x 148 ft ( 4.000 x 45 m )
+              </p>
+            </li>
+          </ul>
           <p>.</p>
           <p>.</p>
           <p>.</p>
         </Segment>
         <Segment>
           <Header as="h4">Arrival Info</Header>
-          <p>Weather: SBGL 092000Z 29002KT 9999 FEW020 BKN100 25/22 Q1010</p>
-          <p>Runway: 11L ASP 10.499 x 148 ft ( 3.200 x 45 m ) lighted</p>
+          <p>
+            Name:&nbsp;&nbsp;{flightPlan[1].name ? flightPlan[1].name : "..."}
+            &nbsp; ({flightPlan[0].icao ? flightPlan[0].icao : "..."})
+          </p>
+          <p>
+            Elevation:&nbsp;&nbsp;
+            {parseInt(
+              flightPlan[0].elevation ? flightPlan[0].elevation : "..."
+            )}
+            &nbsp;ft
+          </p>
+          <p>Runways:</p>
+          <ul>
+            <li>
+              <p>
+                Runway:&nbsp;&nbsp;{" "}
+                {flightPlan[1]["runway ident"]
+                  ? flightPlan[1]["runway ident"]
+                  : "..."}{" "}
+                {flightPlan[1]["runway surface"]
+                  ? flightPlan[1]["runway surface"]
+                  : "..."}{" "}
+                13.123 x 148 ft ( 4.000 x 45 m )
+              </p>
+            </li>
+          </ul>
           <p>.</p>
           <p>.</p>
           <p>.</p>
@@ -45,7 +93,7 @@ const InfoPanel = ({ flightPlan }) => {
       </Grid.Column>
       <Grid.Column>
         <Segment>
-          <Map />
+          <Map flightPlan={flightPlan} />
         </Segment>
       </Grid.Column>
     </Grid>

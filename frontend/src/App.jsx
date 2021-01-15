@@ -5,7 +5,7 @@ import DataForm from "./components/DataForm";
 import InfoPanel from "./components/InfoPanel";
 
 const App = () => {
-  const [flightPlan, setFlightPlan] = useState({});
+  const [flightPlan, setFlightPlan] = useState(["", ""]);
 
   return (
     <>
