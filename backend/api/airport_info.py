@@ -37,23 +37,13 @@ def airport_info(ICAO):
     }
     runways_count = data['runwayCount'] * 2
 
-    if runways_count == 2:
-        airport_info_dict['runway ident'].append(data['runways'][0]['ident'])
-        airport_info_dict['runway length'].append(data['runways'][0]['length'])
-        airport_info_dict['runway width'].append(data['runways'][0]['width'])
-        airport_info_dict['runway surface'].append(
-            data['runways'][0]['surface'])
-    else:
-        for i in range(0, runways_count):
-            airport_info_dict['runway ident'].append(
-                data['runways'][i]['ident'])
-            airport_info_dict['runway length'].append(
-                data['runways'][i]['length'])
-            airport_info_dict['runway width'].append(
-                data['runways'][i]['width'])
-            airport_info_dict['runway surface'].append(
-                data['runways'][i]['surface'])
-
+    for i in range(0, runways_count):
+        if runways_count == 2:
+            i = 0
+        airport_info_dict['runway ident'].append(data['runways'][i]['ident'])
+        airport_info_dict['runway length'].append(data['runways'][i]['length'])
+        airport_info_dict['runway width'].append(data['runways'][i]['width'])
+        airport_info_dict['runway surface'].append(data['runways'][i]['surface'])
     return airport_info_dict
 
 
