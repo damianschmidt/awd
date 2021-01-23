@@ -14,3 +14,6 @@ venv.bak/
 
 weather/logs
 weather/data/src
+
+# Frontend
+node_modules
