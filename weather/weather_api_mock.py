@@ -4,13 +4,21 @@ import pandas as pd
 
 
 def prepare_api(station_code_set):
+    pd.options.mode.chained_assignment = None
     config = configparser.ConfigParser()
     config.read('config.ini')
     processing_percentage = config.getint('APP', 'PROCESSING_PERCENTAGE')
 
     for station_code in station_code_set:
-        w_df = pd.read_csv(f'data/processed/{station_code}_processed_{processing_percentage}.csv', sep=';', dtype=str)
-        w_df = w_df[w_df.Year == '2017']
+        df = pd.read_csv(f'data/processed/{station_code}_processed_{processing_percentage}.csv', sep=';', dtype=str)
+        year = 2017
+        while True:
+            w_df = df[df.Year == str(year)]
+            if len(w_df['Year']) < 100:
+                year -= 1
+            else:
+                break
+
         w_df['Year'] = w_df['Year'].apply(lambda x: '2021')
         w_df['Date'] = w_df['Date'].apply(lambda x: '2021' + x[4:])
         w_df.to_csv(f'data/api/{station_code}_api.csv', sep=';', index=False)
@@ -29,4 +37,5 @@ def get_previous_days(station_code, date):
 
 
 if __name__ == '__main__':
-    get_previous_days('83579', '2021-01-25')
+    # get_previous_days('83579', '2021-01-25')
+    prepare_api({'82024'})

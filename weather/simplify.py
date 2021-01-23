@@ -24,6 +24,7 @@ def simplify(station_code_set):
 
     # Save selected data
     for station_code in station_code_set:
+        print(f'Simplify: {station_code}')
         df[df['Code'] == station_code].to_csv(f'data/simplified/{station_code}_simplified.csv', sep=';', index=False)
 
 

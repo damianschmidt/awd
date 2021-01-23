@@ -4,15 +4,15 @@ from simplify import simplify
 from weather_api_mock import prepare_api
 from run import run
 
-# AIRPORT_STATION = {'SBAX': '83579', 'SBAT': '83214', 'SBAR': '83096', 'SBAU': '83623', 'SBHT': '82353',
-#                    'SBBU': '83773', 'SBBE': '82191', 'SBPS': '83446', 'SBBR': '83373', 'SBBV': '82024',
-#                    'SBCY': '83361', 'SBSP': '83781', 'SBCG': '83704', 'SBCR': '83552', 'SBCF': '83587',
-#                    'SBKG': '82795', 'SBCT': '83842', 'SBFZ': '82397', 'SBGL': '83743', 'SBGR': '83075',
-#                    'SBFI': '83881', 'SBJP': '82798', 'SBNT': '82598', 'SBBH': '83587', 'SBPA': '83967',
-#                    'SBRF': '82900', 'SBRJ': '83743', 'SBSV': '83229', 'SBKP': '83851', 'SBVT': '83648',
-#                    'SBCH': '83883'}
+import math
 
-AIRPORT_STATION = {'SBAX': '83579'}
+AIRPORT_STATION = {'SBAX': '83579', 'SBAT': '83214', 'SBAR': '83096', 'SBAU': '83623', 'SBHT': '82353',
+                   'SBBU': '83773', 'SBBE': '82191', 'SBPS': '83446', 'SBBR': '83373', 'SBBV': '82024',
+                   'SBCY': '83361', 'SBSP': '83781', 'SBCG': '83704', 'SBCR': '83552', 'SBCF': '83587',
+                   'SBKG': '82693', 'SBCT': '83842', 'SBFZ': '82397', 'SBGL': '83743', 'SBGR': '83075',
+                   'SBFI': '83881', 'SBJP': '82792', 'SBNT': '82598', 'SBBH': '83587', 'SBPA': '83967',
+                   'SBRF': '82900', 'SBRJ': '83743', 'SBSV': '83229', 'SBKP': '83851', 'SBVT': '83648',
+                   'SBCH': '83883'}
 
 
 def prepare():
@@ -48,5 +48,21 @@ def predict(airport, date):
     return weather_data
 
 if __name__ == '__main__':
-    data = predict('SBAX', '2021-01-30')
-    print(data)
+    # prepare()
+    data = []
+    problems = []
+    nan = []
+    # problems: ['82353', '83773', '83446', '83373', '83881']
+    # nan? xD ['82024', '83361', '83743', '82792', '83743', '83851']
+    for airport in AIRPORT_STATION.keys():
+        try:
+            prediction = predict(airport, '2021-01-25')
+            station = AIRPORT_STATION[airport]
+            data.append((station, prediction))
+            if math.isnan(prediction['AvgWindSpeed']):
+                nan.append(station)
+        except:
+            problems.append(AIRPORT_STATION[airport])
+    # print(data)
+    print(problems)
+    print(nan)
