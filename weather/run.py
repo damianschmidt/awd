@@ -59,14 +59,11 @@ def run(station, date, input_features, output_features, classification=False):
         y_inverse = y_pred.argmax(axis=1)
         predicted = model.predict(x_pred)
         predicted_inverse = np.argmax(predicted, axis=1)
-        print(y_labels[y_inverse[0]], y_labels[predicted_inverse[0]])
         return y_labels[predicted_inverse[0]]
     else:
         y_inverse = y_transformer.inverse_transform(y_pred)
         predicted = model.predict(x_pred)
         predicted_inverse = y_transformer.inverse_transform(predicted)
-        print(output_features)
-        print(predicted_inverse[0])
         return {output_features[i]: predicted_inverse[0][i] for i in range(len(output_features))}
 
 
