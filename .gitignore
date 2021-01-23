@@ -12,8 +12,8 @@ ENV/
 env.bak/
 venv.bak/
 
-# Wheater data
-weather/data
+weather/logs
+weather/data/src
 
 # Frontend
 node_modules
