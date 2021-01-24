@@ -35,6 +35,11 @@ body {
 
 .leaflet-map {
   height: auto;
-  min-height: 500px;
+  min-height: 400px;
   z-index: 1;
+}
+
+.routePointToPoint {
+  /* height: fit-content !important; */
+  /* flex-grow: 0 !important; */
 }

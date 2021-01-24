@@ -24,7 +24,7 @@ const airportsIcao = _.map(Airports, (airport, index) => ({
   value: airport.icao,
 }));
 
-const DataForm = ({ setFlightPlan }) => {
+const DataForm = ({ setFlightPlan, setDateTime }) => {
   const [activeIndex, setActiveIndex] = useState(true);
   const [currentDate, setCurrentDate] = useState("");
   const [defaultTime, setDefaultTime] = useState("");
@@ -53,9 +53,14 @@ const DataForm = ({ setFlightPlan }) => {
   const submitHandler = async (e) => {
     const Departure = e.target.elements[0].nextSibling.innerText;
     const Arrival = e.target.elements[1].nextSibling.innerText;
-    const Aircraft = e.target.elements[4].nextSibling.innerText;
+    const arrivalDate = e.target.elements[2].value;
+    const arrivalTime = e.target.elements[3].value;
     const errors = [];
     setErrorOccurred(false);
+
+    console.log(e.target.elements[2].value);
+
+    setDateTime([arrivalDate, arrivalTime]);
 
     if (Departure === Arrival) {
       errors[0] = "Arrival it can't be the same as Departure";
@@ -65,10 +70,10 @@ const DataForm = ({ setFlightPlan }) => {
       errors[1] = "Arrival Departure can't be empty";
       setErrorOccurred(true);
     }
-    if (Aircraft === "Aircraft") {
-      errors[2] = "Aircraft can't be empty";
-      setErrorOccurred(true);
-    }
+    // if (Aircraft === "Aircraft") {
+    //   errors[2] = "Aircraft can't be empty";
+    //   setErrorOccurred(true);
+    // }
 
     setErrorMessages(errors);
     if (errors.length === 0) {
