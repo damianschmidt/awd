@@ -1,10 +1,10 @@
-from learn import learn
-from process import process
-from simplify import simplify
-from weather_api_mock import prepare_api
-from run import run
+from .learn import learn
+from .process import process
+from .simplify import simplify
+from .weather_api_mock import prepare_api
+from .run import run
 
-import math
+
 
 
 AIRPORT_STATION = {'SBAX': '83579', 'SBAT': '83214', 'SBAR': '83096', 'SBAU': '83623', 'SBBE': '82191',

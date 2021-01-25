@@ -13,7 +13,7 @@ from sklearn.preprocessing import RobustScaler
 
 def prepare(processing, input_features, output_features, classification):
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('backend/weather/config.ini')
     future_period_predict = config.getint('LEARNING', 'FUTURE_PERIOD_PREDICT')
     history_period_size = config.getint('LEARNING', 'HISTORY_PERIOD_SIZE')
 
@@ -55,7 +55,7 @@ def prepare(processing, input_features, output_features, classification):
 def learn(station_code, input_features, output_features, classification=False):
     # Loading configuration
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('backend/weather/config.ini')
     processing_percentage = config.getint('APP', 'PROCESSING_PERCENTAGE')
 
     # Settings
@@ -125,7 +125,7 @@ def learn(station_code, input_features, output_features, classification=False):
                         )
 
                     checkpoint = ModelCheckpoint(
-                        f'models/{name}.h5',
+                        f'backend/weather/models/{name}.h5',
                         monitor='val_loss',
                         save_best_only=True,
                         mode='min'

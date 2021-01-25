@@ -9,8 +9,10 @@ def create_app():
 
     from backend.api.basic import BASIC
     from backend.api.airport_info import FLIGHT
+    from backend.api.weather_info import WEATHER
 
     app.register_blueprint(BASIC, url_prefix='/api/1')
     app.register_blueprint(FLIGHT, url_prefix='/api/airport')
+    app.register_blueprint(WEATHER, url_prefix='/api/weather')
 
     return app
