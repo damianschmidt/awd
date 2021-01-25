@@ -12,8 +12,8 @@ ENV/
 env.bak/
 venv.bak/
 
-weather/logs
-weather/data/src
+backend/weather/logs
+backend/weather/data/src
 
 # Frontend
 node_modules

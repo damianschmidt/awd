@@ -33,7 +33,7 @@ def process(station_code_set):
 
     # Loading configuration
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('backend/weather/config.ini')
     processing_percentage = config.getint('APP', 'PROCESSING_PERCENTAGE')
 
     for station_code in station_code_set:

@@ -1,27 +1,26 @@
 import configparser
-import sys
 
-import matplotlib.pyplot as plt
+
 import numpy as np
 import pandas as pd
 from keras.engine.saving import load_model
 from keras.utils import np_utils
 from sklearn.preprocessing import RobustScaler
 
-from weather_api_mock import get_previous_days
+from .weather_api_mock import get_previous_days
 
 
 def run(station, date, input_features, output_features, classification=False):
     # Loading configuration
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('backend/weather/config.ini')
     processing_percentage = config.getint('APP', 'PROCESSING_PERCENTAGE')
     future_period_predict = config.getint('LEARNING', 'FUTURE_PERIOD_PREDICT')
     history_period_size = config.getint('LEARNING', 'HISTORY_PERIOD_SIZE')
 
     # Prepare sequences and predictions
     records = get_previous_days(station, date)
-    model = load_model(f'models/{station}_wind_direction.h5') if classification else load_model(f'models/{station}_weather.h5')
+    model = load_model(f'backend/weather/models/{station}_wind_direction.h5') if classification else load_model(f'backend/weather/models/{station}_weather.h5')
     
     # Scale
     pd.options.mode.chained_assignment = None  # disable false warning for copying
