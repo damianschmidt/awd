@@ -1,9 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import imageLogo from "../img/logo.png";
 import { Divider, Grid, Header, Image, Segment } from "semantic-ui-react";
 import Map from "./Map";
+import axios from "axios";
+import AproachDetails from "./aproachDetails";
 
 const InfoPanel = ({ flightPlan, dateTime }) => {
+  const [loading, setLoading] = useState(false);
+  const [weather, setWeather] = useState({
+    dep: {
+      windSpeed: "...",
+      windDirection: "...",
+      pressure: "...",
+      precipitation: "...",
+      temp: "...",
+    },
+    arr: {
+      windSpeed: "...",
+      windDirection: "...",
+      pressure: "...",
+      precipitation: "...",
+      temp: "...",
+    },
+  });
+
+  useEffect(() => {
+    if (flightPlan[0]) {
+      (async () => {
+        setLoading(true);
+        const res = [];
+        res.push(
+          JSON.parse(
+            "[" +
+              (
+                await axios.get(
+                  `http://127.0.0.1:5000/api/weather/${flightPlan[0].icao}/${dateTime[0]}`
+                )
+              ).data +
+              "]"
+          )
+        );
+
+        res.push(
+          JSON.parse(
+            "[" +
+              (
+                await axios.get(
+                  `http://127.0.0.1:5000/api/weather/${flightPlan[1].icao}/${dateTime[0]}`
+                )
+              ).data +
+              "]"
+          )
+        );
+
+        setWeather({
+          dep: {
+            windSpeed: parseInt(parseFloat(res[0][0][0]) * 1.94384449),
+            windDirection: res[0][0][5],
+            pressure: parseInt(res[0][0][2]),
+            precipitation: parseInt(res[0][0][3]),
+            temp: parseInt(res[0][0][4]),
+          },
+          arr: {
+            windSpeed: parseInt(parseFloat(res[1][0][0]) * 1.94384449),
+            windDirection: res[1][0][5],
+            pressure: parseInt(res[1][0][2]),
+            precipitation: parseInt(res[1][0][3]),
+            temp: parseInt(res[1][0][4]),
+          },
+        });
+
+        setLoading(false);
+      })();
+    }
+  }, [flightPlan[0]]);
+
   return (
     <Grid columns={2} stackable>
       <Grid.Row stretched>
@@ -40,12 +111,7 @@ const InfoPanel = ({ flightPlan, dateTime }) => {
             </Grid>
           </Segment>
           <Segment>
-            <Header as="h4">APPROACH DETAILS</Header>
-            <p>Runway: </p>
-            <p>Anti-Ice: </p>
-            <p>Flight Level: </p>
-            <p>Baro: </p>
-            <p>Auto break: </p>
+            <AproachDetails {...{ weather, loading, flightPlan }} />
           </Segment>
         </Grid.Column>
         <Grid.Column>
@@ -90,7 +156,12 @@ const InfoPanel = ({ flightPlan, dateTime }) => {
                   ))
                 : ""}
             </ul>
-            <p>Weather: ...</p>
+            <p>
+              Weather:&nbsp;&nbsp;{weather.dep.windSpeed}kt&nbsp;&nbsp;
+              {weather.dep.windDirection}&nbsp;&nbsp;{weather.dep.precipitation}
+              mm&nbsp;&nbsp;{weather.dep.pressure}hPa&nbsp;&nbsp;
+              {weather.dep.temp}°C
+            </p>
           </Segment>
         </Grid.Column>
         <Grid.Column>
@@ -128,7 +199,12 @@ const InfoPanel = ({ flightPlan, dateTime }) => {
                   ))
                 : ""}
             </ul>
-            <p>Weather: ...</p>
+            <p>
+              Weather: &nbsp;&nbsp;{weather.arr.windSpeed}kt&nbsp;&nbsp;
+              {weather.arr.windDirection}&nbsp;&nbsp;{weather.arr.precipitation}
+              mm&nbsp;&nbsp;{weather.arr.pressure}hPa&nbsp;&nbsp;
+              {weather.arr.temp}°C
+            </p>
           </Segment>
         </Grid.Column>
       </Grid.Row>

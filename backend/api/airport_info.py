@@ -38,7 +38,7 @@ def airport_info(ICAO):
     runways_count = data['runwayCount'] * 2
 
     for i in range(0, runways_count):
-        if runways_count == 2:
+        if runways_count == 1:
             i = 0
         airport_info_dict['runway ident'].append(data['runways'][i]['ident'])
         airport_info_dict['runway length'].append(data['runways'][i]['length'])

@@ -58,8 +58,6 @@ const DataForm = ({ setFlightPlan, setDateTime }) => {
     const errors = [];
     setErrorOccurred(false);
 
-    console.log(e.target.elements[2].value);
-
     setDateTime([arrivalDate, arrivalTime]);
 
     if (Departure === Arrival) {
@@ -70,10 +68,11 @@ const DataForm = ({ setFlightPlan, setDateTime }) => {
       errors[1] = "Arrival Departure can't be empty";
       setErrorOccurred(true);
     }
-    // if (Aircraft === "Aircraft") {
-    //   errors[2] = "Aircraft can't be empty";
-    //   setErrorOccurred(true);
-    // }
+
+    if (!arrivalDate) {
+      errors[2] = "Date can't be empty";
+      setErrorOccurred(true);
+    }
 
     setErrorMessages(errors);
     if (errors.length === 0) {
@@ -89,8 +88,6 @@ const DataForm = ({ setFlightPlan, setDateTime }) => {
         await axios.get(`http://localhost:5000/api/airport/${Arrival}`)
       ).data;
       response[1].icao = Arrival;
-
-      console.log("odp: ", response);
 
       setFlightPlan(response);
       setActiveIndex(!activeIndex);

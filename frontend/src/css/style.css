@@ -27,6 +27,7 @@ body {
 
 .form-btn {
   display: flex;
+  align-items: center;
 }
 
 .loader {
