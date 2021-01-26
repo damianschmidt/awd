@@ -45,7 +45,7 @@ const AproachDetails = ({ weather, loading, flightPlan }) => {
 
     if (flightPlan[1]) {
       flightPlan[1]["runway ident"].forEach((e, i) => {
-        const diff = Math.abs(e - wind / 10);
+        const diff = Math.abs(parseInt(e) - wind / 10);
         if (diff < smallest) {
           smallest = diff;
           setRunway(e);
